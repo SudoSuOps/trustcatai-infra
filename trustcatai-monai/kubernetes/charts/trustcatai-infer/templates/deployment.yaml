@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trustcatai-infer
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: trustcatai-infer
+  template:
+    metadata:
+      labels:
+        app: trustcatai-infer
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          env:
+            - name: WEIGHTS
+              value: "/weights/best.ckpt"
+          volumeMounts:
+            - name: weights
+              mountPath: /weights
+      volumes:
+        - name: weights
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trustcatai-infer
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: trustcatai-infer
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080

@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+runs/
+data/
+outputs/
+*.ckpt
+*.pt
+*.log
+.DS_Store
+wandb/

@@ -1,0 +1,28 @@
+---
+- name: Ensure Docker is present
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Pull training image
+  docker_image:
+    name: trustcatai/monai-train
+    tag: latest
+    source: pull
+
+- name: Run training container
+  docker_container:
+    name: monai-train
+    image: trustcatai/monai-train:latest
+    state: started
+    restart_policy: unless-stopped
+    detach: yes
+    volumes:
+      - "{{ monai_data_dir | default('/data') }}:/data"
+      - "{{ monai_runs_dir | default('/runs') }}:/runs"
+    command: >-
+      python -m trustcatai.trainer.agent
+      --config trustcatai/config/train_bratssyn_unet3d.yaml
+      --data_root /data
+      --runs /runs

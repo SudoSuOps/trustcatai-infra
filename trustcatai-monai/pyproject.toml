@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trustcatai-monai"
+version = "0.1.0"
+description = "Trustcatai MONAI training and inference toolkit"
+authors = [{name = "Trustcatai", email = "ops@sudosuops.ai"}]
+dependencies = [
+  "monai==1.3.0",
+  "torch==2.4.0",
+  "torchvision==0.19.0",
+  "torchaudio==2.4.0",
+  "numpy",
+  "pydantic",
+  "fastapi",
+  "uvicorn[standard]",
+  "matplotlib",
+  "scikit-image",
+  "tqdm",
+  "pyyaml"
+]
+
+[project.urls]
+Homepage = "https://github.com/SudoSuOps/trustcatai-infra"

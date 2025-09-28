@@ -1,0 +1,2 @@
+weights: /weights/best.ckpt
+num_workers: 2

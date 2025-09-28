@@ -1,0 +1,5 @@
+- hosts: trainers
+  gather_facts: yes
+  become: yes
+  roles:
+    - monai_gpu
